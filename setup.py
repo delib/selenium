@@ -47,6 +47,7 @@ setup_args = {
                      'Programming Language :: Python :: 3.2',
                      'Programming Language :: Python :: 3.3'],
     'package_dir':{
+        '': 'py',
         'selenium': 'py/selenium',
         'selenium.common': 'py/selenium/common',
         'selenium.test': 'py/test',
