@@ -107,7 +107,7 @@ class ExecutingJavaScriptTests(unittest.TestCase):
         try:
             self.driver.execute_script("return squiggle()")
             self.fail("Expected an exception")
-        except Exception as e: 
+        except Exception, e: 
             pass 
   
 
@@ -176,7 +176,7 @@ class ExecutingJavaScriptTests(unittest.TestCase):
         try:
             self.driver.execute_script("return arguments[0]", driver)
             self.fail("Exception should have been thrown")
-        except Exception as e: 
+        except Exception, e: 
             pass 
   
     def testShouldBeAbleToPassInMoreThanOneArgument(self): 

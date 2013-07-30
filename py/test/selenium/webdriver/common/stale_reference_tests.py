@@ -30,7 +30,7 @@ class StaleReferenceTests(unittest.TestCase):
         try:
             elem.click()
             self.fail("Should Throw a StaleElementReferenceException but didnt")
-        except StaleElementReferenceException as e:
+        except StaleElementReferenceException, e:
             pass
 
     def testShouldNotCrashWhenCallingGetSizeOnAnObsoleteElement(self):
@@ -40,7 +40,7 @@ class StaleReferenceTests(unittest.TestCase):
         try: 
             elem.size
             self.fail("Should Throw a StaleElementReferenceException but didnt")
-        except StaleElementReferenceException as e:
+        except StaleElementReferenceException, e:
             pass
 
     def testShouldNotCrashWhenQueryingTheAttributeOfAStaleElement(self):
@@ -50,7 +50,7 @@ class StaleReferenceTests(unittest.TestCase):
         try:
             heading.get_attribute("class")
             self.fail("Should Throw a StaleElementReferenceException but didnt")
-        except StaleElementReferenceException as e:
+        except StaleElementReferenceException, e:
             pass
 
     def _pageURL(self, name):

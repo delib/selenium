@@ -36,7 +36,7 @@ class PageLoadTimeoutTest(unittest.TestCase):
         try:
             self._loadSimplePage()
             self.fail("Expected a timeout on page load")
-        except TimeoutException as e:
+        except TimeoutException, e:
             pass
 
     def testClickShouldTimeout(self):
@@ -45,7 +45,7 @@ class PageLoadTimeoutTest(unittest.TestCase):
         try:
             self.driver.find_element_by_id("multilinelink").click()
             self.fail("Expected a timeout on page load after clicking")
-        except TimeoutException as e:
+        except TimeoutException, e:
             pass
 
     def _pageURL(self, name):

@@ -18,8 +18,8 @@ import base64
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.common.exceptions import WebDriverException
-from .service import Service
-from .options import Options
+from service import Service
+from options import Options
 
 class WebDriver(RemoteWebDriver):
     """
@@ -77,5 +77,4 @@ class WebDriver(RemoteWebDriver):
         except:
             # We don't care about the message because something probably has gone wrong
             pass
-        finally:
-            self.service.stop()
+        self.service.stop()

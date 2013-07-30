@@ -64,9 +64,9 @@ class FormHandlingTests(unittest.TestCase):
         try:
             self.driver.find_element_by_name("there is no spoon").submit()
             self.fail("Expected NoSuchElementException to have been thrown")
-        except NoSuchElementException as e:
+        except NoSuchElementException, e:
             pass
-        except Exception as e:
+        except Exception, e:
             self.fail("Expected NoSuchElementException but got " + str(e))
         
     def testShouldBeAbleToEnterTextIntoATextAreaBySettingItsValue(self):
@@ -177,9 +177,9 @@ class FormHandlingTests(unittest.TestCase):
         try:
             element.click()
             self.fail("Expected WebDriverException to have been thrown")
-        except WebDriverException as e:
+        except WebDriverException, e:
             pass
-        except Exception as e:
+        except Exception, e:
             self.fail("Expected WebDriverException but got " + str(type(e)))
         
     def testSendingKeyboardEventsShouldAppendTextInInputs(self):    

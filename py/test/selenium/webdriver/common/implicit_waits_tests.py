@@ -44,9 +44,9 @@ class ImplicitWaitTest(unittest.TestCase):
         try:
             self.driver.find_element_by_id("box0")
             self.fail("Expected NoSuchElementException to have been thrown")
-        except NoSuchElementException as e:
+        except NoSuchElementException, e:
             pass
-        except Exception as e:
+        except Exception, e:
             self.fail("Expected NoSuchElementException but got " + str(e))
 
     def testShouldReturnAfterFirstAttemptToFindOneAfterDisablingImplicitWaits(self):
@@ -56,9 +56,9 @@ class ImplicitWaitTest(unittest.TestCase):
         try:
             self.driver.find_element_by_id("box0")
             self.fail("Expected NoSuchElementException to have been thrown")
-        except NoSuchElementException as e:
+        except NoSuchElementException, e:
             pass
-        except Exception as e:
+        except Exception, e:
             self.fail("Expected NoSuchElementException but got " + str(e))
     
     def testShouldImplicitlyWaitUntilAtLeastOneElementIsFoundWhenSearchingForMany(self):

@@ -144,7 +144,7 @@ class TestFirefoxProfile:
         try:
             self.profile.set_proxy(proxy)
             assert False, "exception after passing empty proxy is expected"
-        except ValueError as e:
+        except ValueError, e:
             pass
 
         assert "network.proxy.type" not in self.profile.default_preferences

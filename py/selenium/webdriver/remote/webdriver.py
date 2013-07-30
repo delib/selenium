@@ -15,10 +15,10 @@
 The WebDriver implementation.
 """
 import base64
-from .command import Command
-from .webelement import WebElement
-from .remote_connection import RemoteConnection
-from .errorhandler import ErrorHandler
+from command import Command
+from webelement import WebElement
+from remote_connection import RemoteConnection
+from errorhandler import ErrorHandler
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import InvalidSelectorException
 from selenium.webdriver.common.by import By
@@ -184,7 +184,10 @@ class WebDriver(object):
             driver.title
         """
         resp = self.execute(Command.GET_TITLE)
-        return resp['value'] if resp['value'] is not None else ""
+        if resp['value'] is not None:
+            return resp['value']
+        else:
+            return ""
 
     def find_element_by_id(self, id_):
         """Finds an element by id.
@@ -711,8 +714,9 @@ class WebDriver(object):
         """
         png = self.execute(Command.SCREENSHOT)['value']
         try:
-            with open(filename, 'wb') as f:
-                f.write(base64.b64decode(png.encode('ascii')))
+            f = open(filename, 'wb')
+            f.write(base64.b64decode(png.encode('ascii')))
+            f.close()
         except IOError:
             return False
         del png
@@ -776,8 +780,7 @@ class WebDriver(object):
         return self.execute(Command.GET_WINDOW_POSITION,
             {'windowHandle': windowHandle})['value']
 
-    @property
-    def orientation(self):
+    def orientation_get(self):
         """
         Gets the current orientation of the device
 
@@ -786,8 +789,7 @@ class WebDriver(object):
         """
         return self.execute(Command.GET_SCREEN_ORIENTATION)['value']
 
-    @orientation.setter
-    def orientation(self, value):
+    def orientation_set(self, value):
         """
         Sets the current orientation of the device
 
@@ -802,6 +804,8 @@ class WebDriver(object):
             self.execute(Command.SET_SCREEN_ORIENTATION, {'orientation': value})['value']
         else:
             raise WebDriverException("You can only set the orientation to 'LANDSCAPE' and 'PORTRAIT'")
+
+    orientation = property(orientation_set, orientation_set)
 
     def is_online(self):
         """ Returns a boolean if the browser is online or offline"""
@@ -823,9 +827,9 @@ class WebDriver(object):
             f.write(base64.b64decode(png.encode('ascii')))
             f.close()
         except IOError:
-            return False
-        finally:
             del png
+            return False
+        del png
         return True
 
     @property

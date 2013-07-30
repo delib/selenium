@@ -63,15 +63,15 @@ class Proxy(object):
             if 'autodetect' in raw and raw['autodetect'] is not None:
                 self.auto_detect = raw['autodetect']
 
-    @property
-    def proxy_type(self):
+    
+    def proxy_type_get(self):
         """
         Returns proxy type as `ProxyType`.
         """
         return self.proxyType
 
-    @proxy_type.setter
-    def proxy_type(self, value):
+    
+    def proxy_type_set(self, value):
         """
         Sets proxy type.
 
@@ -80,16 +80,16 @@ class Proxy(object):
         """
         self._verify_proxy_type_compatilibily(value)
         self.proxyType = value
+    
+    proxy_type = property(proxy_type_get, proxy_type_set)
 
-    @property
-    def auto_detect(self):
+    def auto_detect_get(self):
         """
         Returns autodect setting.
         """
         return self.autodetect
 
-    @auto_detect.setter
-    def auto_detect(self, value):
+    def auto_detect_set(self, value):
         """
         Sets autodetect setting.
 
@@ -104,15 +104,15 @@ class Proxy(object):
         else:
             raise ValueError("Autodetect proxy value needs to be a boolean")
 
-    @property
-    def ftp_proxy(self):
+    auto_detect = property(auto_detect_get, auto_detect_set)
+
+    def ftp_proxy_get(self):
         """
         Returns ftp proxy setting.
         """
         return self.ftpProxy
 
-    @ftp_proxy.setter
-    def ftp_proxy(self, value):
+    def ftp_proxy_set(self, value):
         """
         Sets ftp proxy setting.
 
@@ -123,15 +123,15 @@ class Proxy(object):
         self.proxyType = ProxyType.MANUAL
         self.ftpProxy = value
 
-    @property
-    def http_proxy(self):
+    ftp_proxy = property(ftp_proxy_get, ftp_proxy_set)
+
+    def http_proxy_get(self):
         """
         Returns http proxy setting.
         """
         return self.httpProxy
 
-    @http_proxy.setter
-    def http_proxy(self, value):
+    def http_proxy_set(self, value):
         """
         Sets http proxy setting.
 
@@ -142,15 +142,15 @@ class Proxy(object):
         self.proxyType = ProxyType.MANUAL
         self.httpProxy = value
 
-    @property
-    def no_proxy(self):
+    http_proxy = property(http_proxy_get, http_proxy_set)
+
+    def no_proxy_get(self):
         """
         Returns noproxy setting.
         """
         return self.noProxy
 
-    @no_proxy.setter
-    def no_proxy(self, value):
+    def no_proxy_set(self, value):
         """
         Sets noproxy setting.
 
@@ -161,15 +161,15 @@ class Proxy(object):
         self.proxyType = ProxyType.MANUAL
         self.noProxy = value
 
-    @property
-    def proxy_autoconfig_url(self):
+    no_proxy = property(no_proxy_get, no_proxy_set)
+
+    def proxy_autoconfig_url_get(self):
         """
         Returns proxy autoconfig url setting.
         """
         return self.proxyAutoconfigUrl
 
-    @proxy_autoconfig_url.setter
-    def proxy_autoconfig_url(self, value):
+    def proxy_autoconfig_url_set(self, value):
         """
         Sets proxy autoconfig url setting.
 
@@ -180,15 +180,15 @@ class Proxy(object):
         self.proxyType = ProxyType.PAC
         self.proxyAutoconfigUrl = value
 
-    @property
-    def ssl_proxy(self):
+    proxy_autoconfig_url = property(proxy_autoconfig_url_get, proxy_autoconfig_url_set)
+
+    def ssl_proxy_get(self):
         """
         Returns https proxy setting.
         """
         return self.sslProxy
 
-    @ssl_proxy.setter
-    def ssl_proxy(self, value):
+    def ssl_proxy_set(self, value):
         """
         Sets https proxy setting.
 
@@ -198,6 +198,8 @@ class Proxy(object):
         self._verify_proxy_type_compatilibily(ProxyType.MANUAL)
         self.proxyType = ProxyType.MANUAL
         self.sslProxy = value
+
+    ssl_proxy = property(ssl_proxy_get, ssl_proxy_set)
 
     def _verify_proxy_type_compatilibily(self, compatibleProxy):
         if self.proxyType != ProxyType.UNSPECIFIED and self.proxyType != compatibleProxy:

@@ -25,11 +25,11 @@ except ImportError:
 try:
     from urllib import parse
 except ImportError:
-    import urlparse as parse
+    import selenium.urlparse as parse
 
-from .command import Command
-from .errorhandler import ErrorCode
-from . import utils
+from command import Command
+from errorhandler import ErrorCode
+from selenium.webdriver.remote import utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -403,7 +403,7 @@ class RemoteConnection(object):
                 return {'status': response.code, 'value': response.read()}
             body = response.read().decode('utf-8').replace('\x00', '').strip()
             content_type = [value for name, value in response.info().items() if name.lower() == "content-type"]
-            if not any([x.startswith('image/png') for x in content_type]):
+            if not (True in map(bool, [x.startswith('image/png') for x in content_type])):
                 try:
                     data = utils.load_json(body.strip())
                 except ValueError:

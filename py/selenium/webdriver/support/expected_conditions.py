@@ -198,7 +198,7 @@ class staleness_of(object):
             # Calling any method forces a staleness check
             self.element.is_enabled()
             return False
-        except StaleElementReferenceException as expected:
+        except StaleElementReferenceException, expected:
             return True
 
 class element_to_be_selected(object):
@@ -269,15 +269,15 @@ def _find_element(driver, by):
     """
     try :
       return driver.find_element(*by)
-    except NoSuchElementException as e:
+    except NoSuchElementException, e:
         raise e
-    except WebDriverException as e:
+    except WebDriverException, e:
         raise e
 
 
 def _find_elements(driver, by):
     try :
         return driver.find_elements(*by)
-    except WebDriverException as e:
+    except WebDriverException, e:
         raise e
 

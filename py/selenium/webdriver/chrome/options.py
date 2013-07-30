@@ -28,15 +28,13 @@ class Options(object):
         self._extension_files = []
         self._experimental_options = {}
 
-    @property
-    def binary_location(self):
+    def binary_location_get(self):
         """
         Returns the location of the binary otherwise an empty string
         """
         return self._binary_location
 
-    @binary_location.setter
-    def binary_location(self, value):
+    def binary_location_set(self, value):
         """
         Allows you to set where the chromium binary lives
 
@@ -44,6 +42,8 @@ class Options(object):
          - value: path to the Chromium binary
         """
         self._binary_location = value
+
+    binary_location = property(binary_location_get, binary_location_set)
 
     @property
     def arguments(self):

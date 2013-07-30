@@ -21,7 +21,7 @@ except ImportError:
 import base64
 import shutil
 import sys
-from .firefox_binary import FirefoxBinary
+from firefox_binary import FirefoxBinary
 from selenium.common.exceptions import ErrorInResponseException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities 
 from selenium.webdriver.firefox.extension_connection import ExtensionConnection
@@ -79,7 +79,7 @@ class WebDriver(RemoteWebDriver):
             shutil.rmtree(self.profile.path)
             if self.profile.tempfolder is not None:
                 shutil.rmtree(self.profile.tempfolder)
-        except Exception as e:
+        except Exception, e:
             print(str(e))
 
     @property

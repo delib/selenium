@@ -25,7 +25,7 @@ import os
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
-from .service import Service
+from service import Service
 
 class WebDriver(RemoteWebDriver):
     """
@@ -69,5 +69,4 @@ class WebDriver(RemoteWebDriver):
             RemoteWebDriver.quit(self)
         except http_client.BadStatusLine:
             pass
-        finally:
-            self.service.stop()
+        self.service.stop()

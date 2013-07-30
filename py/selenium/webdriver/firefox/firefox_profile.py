@@ -12,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import with_statement
 
 import base64
 import copy
@@ -154,15 +153,13 @@ class FirefoxProfile(object):
         """
         return self.profile_dir
 
-    @property
-    def port(self):
+    def port_get(self):
         """
         Gets the port that WebDriver is working on
         """
         return self._port
 
-    @port.setter
-    def port(self, port):
+    def port_set(self, port):
         """
         Sets the port that WebDriver will be running on
         """
@@ -172,42 +169,44 @@ class FirefoxProfile(object):
             port = int(port)
             if port < 1 or port > 65535:
                 raise WebDriverException("Port number must be in the range 1..65535")
-        except (ValueError, TypeError) as e:
+        except (ValueError, TypeError), e:
             raise WebDriverException("Port needs to be an integer")
         self._port = port
         self.set_preference("webdriver_firefox_port", self._port)
 
-    @property
-    def accept_untrusted_certs(self):
+    port = property(port_get, port_set)
+
+    def accept_untrusted_certs_get(self):
         return self._santise_pref(
             self.default_preferences["webdriver_accept_untrusted_certs"])
 
-    @accept_untrusted_certs.setter
-    def accept_untrusted_certs(self, value):
+    def accept_untrusted_certs_set(self, value):
         if value not in [True, False]:
             raise WebDriverException("Please pass in a Boolean to this call")
         self.set_preference("webdriver_accept_untrusted_certs", value)
 
-    @property
-    def assume_untrusted_cert_issuer(self):
+    accept_untrusted_certs = property(accept_untrusted_certs_get, accept_untrusted_certs_set)
+
+    def assume_untrusted_cert_issuer_get(self):
         return self._santise_pref(self.default_preferences["webdriver_assume_untrusted_issuer"])
 
-    @assume_untrusted_cert_issuer.setter
-    def assume_untrusted_cert_issuer(self, value):
+    def assume_untrusted_cert_issuer_set(self, value):
         if value not in [True, False]:
             raise WebDriverException("Please pass in a Boolean to this call")
 
         self.set_preference("webdriver_assume_untrusted_issuer", value)
 
-    @property
-    def native_events_enabled(self):
+    assume_untrusted_cert_issuer = property(assume_untrusted_cert_issuer_get, assume_untrusted_cert_issuer_set)
+
+    def native_events_enabled_get(self):
         return self._santise_pref(self.default_preferences['webdriver_enable_native_events'])
 
-    @native_events_enabled.setter
-    def native_events_enabled(self, value):
+    def native_events_enabled_set(self, value):
         if value not in [True, False]:
             raise WebDriverException("Please pass in a Boolean to this call")
         self.set_preference("webdriver_enable_native_events", value)
+
+    native_events_enabled = property(native_events_enabled_get, native_events_enabled_set)
 
     @property
     def encoded(self):
@@ -273,18 +272,19 @@ class FirefoxProfile(object):
         """
         writes the current user prefs dictionary to disk
         """
-        with open(self.userPrefs, "w") as f:
-            for key, value in user_prefs.items():
-                f.write('user_pref("%s", %s);\n' % (key, value))
+        f = open(self.userPrefs, "w")
+        for key, value in user_prefs.items():
+            f.write('user_pref("%s", %s);\n' % (key, value))
+        f.close()
 
     def _read_existing_userjs(self):
         userjs_path = os.path.join(self.profile_dir, 'user.js')
         PREF_RE = re.compile(r'user_pref\("(.*)",\s(.*)\)')
         try:
-            with open(userjs_path) as f:
-                for usr in f:
-                    matches = re.search(PREF_RE, usr)
-                    self.default_preferences[matches.group(1)] = matches.group(2)
+            f = open(userjs_path)
+            for usr in f:
+                matches = re.search(PREF_RE, usr)
+                self.default_preferences[matches.group(1)] = matches.group(2)
         except:
             # The profile given hasn't had any changes made, i.e no users.js
             pass
@@ -311,8 +311,9 @@ class FirefoxProfile(object):
                     if not os.path.isdir(os.path.dirname(os.path.join(tmpdir, name))):
                         os.makedirs(os.path.dirname(os.path.join(tmpdir, name)))
                     data = compressed_file.read(name)
-                    with open(os.path.join(tmpdir, name), 'wb') as f:
-                        f.write(data)
+                    f = open(os.path.join(tmpdir, name), 'wb')
+                    f.write(data)
+                    f.close()
             xpifile = addon
             addon = tmpdir
 

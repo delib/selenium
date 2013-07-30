@@ -23,7 +23,7 @@ except ImportError:  # 3+
 import base64
 
 
-from .command import Command
+from command import Command
 from selenium.common.exceptions import WebDriverException 
 from selenium.common.exceptions import InvalidSelectorException
 from selenium.webdriver.common.by import By
@@ -249,7 +249,7 @@ class WebElement(object):
         try:
             return self._execute(Command.UPLOAD_FILE, 
                             {'file': base64.encodestring(fp.getvalue())})['value']
-        except WebDriverException as e:
+        except WebDriverException, e:
             if "Unrecognized command: POST" in e.__str__():
                 return filename
             elif "Command not found: POST " in e.__str__():
