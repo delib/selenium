@@ -87,7 +87,10 @@ class visibility_of(object):
         return _element_if_visible(self.element)
 
 def _element_if_visible(element):
-    return element if element.is_displayed() else False
+    if element.is_displayed():
+        return element
+    else:
+        False
 
 class presence_of_all_elements_located(object):
     """ An expectation for checking that there is at least one element present
