@@ -28,7 +28,7 @@ for scheme in INSTALL_SCHEMES.values():
 setup_args = {
     'cmdclass':{'install': install},
     'name':'selenium',
-    'version':"2.33.0-rubber1",
+    'version':"2.33.0-rubber2",
     'install_requires':['httpsproxy_urllib2', ],
     'description':'Python bindings for Selenium',
     'long_description':open(join(abspath(dirname(__file__)), "py", "README")).read(),
