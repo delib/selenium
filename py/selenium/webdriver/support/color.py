@@ -56,7 +56,7 @@ class Color(object):
                 if self.match_obj is None:
                     return ()
                 else:
-                    self.match_obj.groups()
+                    return self.match_obj.groups()
 
         m = Matcher()
 
@@ -94,7 +94,10 @@ class Color(object):
             g = r
             b = r
         else:
-            luminocity2 = l * (1 + s) if  l < 0.5 else  l + s - l * s
+            if  l < 0.5:
+                luminocity2 = l * (1 + s)  
+            else:
+                luminocity1 = l + s - l * s
             luminocity1 = 2 * l - luminocity2
 
             def hue_to_rgb(lum1, lum2, hue):
@@ -122,7 +125,10 @@ class Color(object):
         self.red = int(red)
         self.green = int(green)
         self.blue = int(blue)
-        self.alpha = "1" if float(alpha) == 1 else str(float(alpha) or 0)
+        if float(alpha) == 1:
+            self.alpha = "1"
+        else:
+            self.alpha = str(float(alpha) or 0)
 
     @property
     def rgb(self):
