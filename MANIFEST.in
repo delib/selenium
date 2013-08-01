@@ -12,6 +12,7 @@ recursive-include py/selenium/webdriver/firefox/amd64 *.so
 recursive-include py/selenium/webdriver/ie *.py 
 recursive-include py/selenium/webdriver/remote *.py
 recursive-include py/selenium/webdriver/support *.py
+recursive-include py/test *.py
 include py/selenium/selenium.py
 include py/selenium/__init__.py
 include py/CHANGES
