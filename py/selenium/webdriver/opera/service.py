@@ -75,6 +75,6 @@ class Service(object):
         if self.process is None:
             return
 
-        self.process.kill()
+        os.kill(self.process.pid, 15)
         self.process.wait()
 

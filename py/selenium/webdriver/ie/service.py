@@ -103,7 +103,7 @@ class Service(object):
         #Tell the Server to properly die in case
         try:
             if self.process:
-                self.process.kill()
+                os.kill(self.process.pid, 15)
                 self.process.wait()
         except WindowsError:
             # kill may not be available under windows environment
